@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation Example</title>
+  <style>
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+    .error-message {
+  color: red;
+  font-size: 12px;
+}
+
+form {
+  width: 300px;
+  margin: 0 auto;
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="checkbox"],
+input[type="submit"] {
+  width: 100%;
+  padding: 5px;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+  </style>
+</head>
+<body>
+  <form id="myForm">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName">
+      <span id="firstNameError" class="error-message"></span>
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName">
+      <span id="lastNameError" class="error-message"></span>
+    </div>
+    <div>
+      <label for="phoneNumber">Phone Number:</label>
+      <input type="text" id="phoneNumber" name="phoneNumber">
+      <span id="phoneNumberError" class="error-message"></span>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email">
+      <span id="emailError" class="error-message"></span>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span id="passwordError" class="error-message"></span>
+    </div>
+    <div>
+      <input type="checkbox" id="terms" name="terms">
+      <label for="terms">I agree to the given Terms and Conditions.</label>
+      <span id="termsError" class="error-message"></span>
+    </div>
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+
+  <script>
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Clear previous error messages
+      clearErrors();
+
+      // Get form values
+      var firstName = document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value;
+      var phoneNumber = document.getElementById("phoneNumber").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var terms = document.getElementById("terms").checked;
+
+      // Validate form inputs
+      var isValid = true;
+
+      if (firstName.trim() === "") {
+        displayError("firstNameError", "Name cannot be empty");
+        isValid = false;
+      }
+
+      if (lastName.trim() === "") {
+        displayError("lastNameError", "Name cannot be empty");
+        isValid = false;
+      }
+
+      if (!validatePhoneNumber(phoneNumber)) {
+        displayError("phoneNumberError", "Please enter a valid phone number");
+        isValid = false;
+      }
+
+      if (!validateEmail(email)) {
+        displayError("emailError", "Please enter a valid email address");
+        isValid = false;
+      }
+
+      if (!validatePassword(password)) {
+        displayError("passwordError", "Please enter a valid password");
+        isValid = false;
+      }
+
+      if (!terms) {
+        displayError("termsError", "Please agree to the Terms and Conditions");
+        isValid = false;
+      }
+
+      if (isValid) {
+        // Form is valid, log the values and show success message
+        console.log("First Name:", firstName);
+        console.log("Last Name:", lastName);
+        console.log("Phone Number:", phoneNumber);
+        console.log("Email:", email);
+        // Form is valid, log the values and show success message
+        console.log("First Name:", firstName);
+        console.log("Last Name:", lastName);
+        console.log("Phone Number:", phoneNumber);
+        console.log("Email:", email);
+        console.log("Password:", password);
+
+        // Show success message
+        alert("Form submitted successfully");
+      }
+    });
+
+    // Function to display error messages
+    function displayError(elementId, errorMessage) {
+      var errorElement = document.getElementById(elementId);
+      errorElement.textContent = errorMessage;
+    }
+
+    // Function to clear error messages
+    function clearErrors() {
+      var errorElements = document.getElementsByClassName("error-message");
+      for (var i = 0; i < errorElements.length; i++) {
+        errorElements[i].textContent = "";
+      }
+    }
+
+    // Function to validate phone number
+    function validatePhoneNumber(phoneNumber) {
+      var phoneNumberRegex = /^\d{10}$/;
+      return phoneNumberRegex.test(phoneNumber);
+    }
+
+    // Function to validate email address
+    function validateEmail(email) {
+      var emailRegex = /^\S+@\S+\.\S+$/;
+      return emailRegex.test(email);
+    }
+
+    // Function to validate password
+    function validatePassword(password) {
+      // Password must be at least 8 characters long
+      // and must contain at least one numeric value and one uppercase value
+      var passwordRegex = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+      return passwordRegex.test(password);
+    }
+  </script>
+</body>
+</html>
